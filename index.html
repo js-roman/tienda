@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-xxl-5">
+                <div class="goods_box" id="goods">
+                    <div class="menu">
+                        <input type="text" class="search" placeholder="Buscar">
+                        <button class="add btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">&#10010;</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="goods table mt-3" id="table1">
+                            <thead>
+                                <tr class="table-primary align-middle">
+                                    <th data-type="number">№</th>
+                                    <th data-type="string"> Nombre</th>
+                                    <th data-type="number">Precio, &euro;</th>
+                                    <th data-type="number"> Cuantidad</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="list"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-xxl-7">
+                <div class="price_box">
+                    <div class="menu">
+                        <div class="price_title">
+                            Suma: <span class="price_result">0 &euro;</span>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table price mt-3" id="table2">
+                            <thead>
+                                <tr class="table-primary align-middle">
+                                    <th data-type="number">№</th>
+                                    <th data-type="string">Nombre</th>
+                                    <th data-type="number">Precio, &euro;</th>
+                                    <th data-type="number">Cuantidad</th>
+                                    <th>Descuento</th>
+                                    <th data-type="number">Precio de descuento, &euro;</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="cart">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Модальное окно -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Añadir </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="good_name" class="form-label">Nombre</label>
+                    <input type="text" class="form-control mt-3" id="good_name" maxlength="40">
+                    <label for="good_price" class="form-label">Precio</label>
+                    <input type="text" class="form-control mt-3" id="good_price">
+                    <label for="good_count" class="form-label">Cuantidad</label>
+                    <input type="text" class="form-control mt-3" id="good_count" min="1" value="1">
+                    <button type="submit" class="add_new btn btn-success mt-3">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/list.min.js"></script>
+    <script src="js/sweetalert2.all.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
