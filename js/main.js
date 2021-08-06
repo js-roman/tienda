@@ -11,6 +11,8 @@ let myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {
 });
 document.querySelector("button.add_new").addEventListener("click", saveGoods);
 document.querySelector(".list").addEventListener("click", deleteGood);
+document.querySelector(".cart").addEventListener("click", deleteGoodFromCart);
+document.querySelector(".list").addEventListener("click", moveGood);
 document.querySelector(".search").addEventListener("keyup", searchGood);
 
 updateTable();
@@ -47,9 +49,24 @@ function saveGoods() {
     }
 }
 
+function moveGood(event) {
+    if (!event.target.dataset.goods) {
+        return;
+    }
+    let goods = JSON.parse(localStorage.getItem("goods"));
+    for (i = 0; i < goods.length; i++) {
+        if (goods[i][3] > 0 && goods[i][0] == event.target.dataset.goods) {
+            goods[i][4]++;
+            goods[i][3]--;
+            localStorage.setItem("goods", JSON.stringify(goods));
+            updateTable();
+        }
+    }
+}
+
 function updateTable() {
     let goods = JSON.parse(localStorage.getItem("goods"));
-    console.log(goods.length);
+
     let resultPrice = 0;
     if (goods.length) {
         table1.hidden = false;
@@ -76,7 +93,7 @@ function updateTable() {
             td3.innerHTML = `${goods[i][2]}`;
             td4.innerHTML = `${goods[i][3]}`;
             td5.innerHTML = `<button class="good_delete btn-danger" data-delete="${goods[i][0]}">&#10006;</button>`;
-            td6.innerHTML = `<button class="good_delete btn-primary" data-goods="${goods[i][0]}">&#10149;</button>`;
+            td6.innerHTML = `<button class="good_move btn-primary" data-goods="${goods[i][0]}">&#10149;</button>`;
 
             if (goods[i][4] > 0) {
                 goods[i][6] =
@@ -84,7 +101,7 @@ function updateTable() {
                     goods[i][4] * goods[i][2] * goods[i][5] * 0.01;
                 resultPrice += goods[i][6];
 
-                let tr = list.insertRow();
+                let tr = cart.insertRow();
                 tr.classList.add("align-middle");
                 let td1 = tr.insertCell();
                 let td2 = tr.insertCell();
@@ -141,6 +158,21 @@ function deleteGood(event) {
             Swal.fire("¡Eleminado!", "success");
         }
     });
+}
+
+function deleteGoodFromCart(event) {
+    if (!event.target.dataset.delete) {
+        return;
+    }
+    let goods = JSON.parse(localStorage.getItem("goods"));
+    for (i = 0; i < goods.length; i++) {
+        if (goods[i][0] == event.target.dataset.delete) {
+            goods[i][3]++;
+            goods[i][4]--;
+        }
+    }
+    localStorage.setItem("goods", JSON.stringify(goods));
+    updateTable();
 }
 
 function searchGood() {

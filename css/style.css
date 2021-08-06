@@ -25,7 +25,8 @@ input {
 }
 
 button.add,
-button.good_delete {
+button.good_delete,
+button.good_move {
     display: flex;
     align-items: center;
     justify-content: center;
