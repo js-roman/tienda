@@ -184,5 +184,53 @@ function searchGood() {
     let listObj = new List("goods", options);
     console.log(listObj);
 
-    // listObj.search(searchString);
+    listObj.search(searchString);
+}
+
+table1.onclick = (event) => {
+    if (event.target.tagName != "TH") return;
+    sortGoods(event, "table1");
+};
+table2.onclick = (event) => {
+    if (event.target.tagName != "TH") return;
+    sortGoods(event, "table2");
+};
+
+function sortGoods(event, id) {
+    let th = event.target;
+    let type = th.dataset.type;
+    let colNum = th.cellIndex;
+
+    const rowsArray = Array.from(
+        document.getElementById(id).querySelector("tbody").rows
+    );
+    let compare;
+    switch (type) {
+        case "number":
+            compare = function(row1, row2) {
+                return row1.cells[colNum].innerHTML - row2.cells[colNum].innerHTML;
+            };
+            break;
+        case "string":
+            compare = function(row1, row2) {
+                return row1.cells[colNum].innerHTML > row2.cells[colNum].innerHTML;
+            };
+            break;
+    }
+    rowsArray.sort(compare);
+    document
+        .getElementById(id)
+        .querySelector("tbody")
+        .append(...rowsArray);
+}
+
+table2.keyup = (event) => {
+    calcDesc(event);
+};
+
+function calcDesc(event) {
+    console.log("qqq");
+
+    let desc = event.target.value;
+    console.log(desc);
 }
