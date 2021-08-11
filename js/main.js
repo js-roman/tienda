@@ -120,7 +120,7 @@ function updateTable() {
                 td2.innerHTML = `${goods[i][1]}`;
                 td3.innerHTML = `${goods[i][2]}`;
                 td4.innerHTML = `${goods[i][4]}`;
-                td5.innerHTML = `<input data-goodid="good-${goods.length}" type="text" value="${goods[i][5]}" min="0" max="100">`;
+                td5.innerHTML = `<input data-goodid="${goods[i][0]}" type="text" value="${goods[i][5]}" min="0" max="100">`;
                 td6.innerHTML = `${goods[i][6]}`;
                 td7.innerHTML = `<button class="good_delete btn-danger" data-delete="${goods[i][0]}">&#10006;</button>`;
             }
@@ -224,13 +224,31 @@ function sortGoods(event, id) {
         .append(...rowsArray);
 }
 
-table2.keyup = (event) => {
+table2.addEventListener("input", (event) => {
     calcDesc(event);
-};
+});
 
 function calcDesc(event) {
-    console.log("qqq");
-
+    let goods = JSON.parse(localStorage.getItem("goods"));
     let desc = event.target.value;
-    console.log(desc);
+    let id;
+    for (i = 0; i < goods.length; i++) {
+        if (goods[i][0] == event.target.dataset.goodid) {
+            goods[i][5] = desc;
+            id = goods[i][0];
+            console.log(goods[i][0] + "111" + goods[i][5]);
+            goods[i][6] = goods[i][2] * goods[i][3] * (100 - goods[i][5]);
+            localStorage.setItem("goods", JSON.stringify(goods));
+        }
+    }
+    updateTable();
+    // event.target.focus();
+    // event.target.style.backgroundColor = "green";
+    // event.target.value = "10";
+    document.querySelector(`[data-goodid=${id}]`).focus();
+    document.querySelector(`[data-goodid=${id}]`).selectionStart = desc.length;
+    console.log(event.target);
+    console.log(document.querySelector(`[data-goodid=${id}]`));
+
+    console.log(event.target == document.querySelector(`[data-goodid=${id}]`));
 }
